@@ -1,20 +1,36 @@
 ---
+import BaseLayout from "../layouts/BaseLayout.astro";
+const pageTitle = "About Me";
 
+const identity = {
+  firstName: "Álex",
+  country: "Spain",
+  occupation: "Software Developer",
+  hobbies: ["photography", "calisthenics", "videogames"],
+};
+const { firstName, country, occupation, hobbies } = identity;
+
+const skills = ["HTML", "CSS", "JavaScript", "React", "Astro", "Writing Docs"];
+const happy = true;
+const finished = true;
+const goal = 3;
+let skillColor = "navy";
+const boldFont = "bold";
+const textCase = "uppercase";
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Astro</title>
-  </head>
-  <body>
-    <a href="/">Home</a>
-    <a href="/about">About</a>
-    <a href="/blog">Our Blog</a>
-    <h1>About Me</h1>
+<style define:vars={{ skillColor, boldFont, textCase }}>
+  .skill {
+    color: var(--skillColor);
+    font-weight: var(--boldFont);
+    text-transform: var(--textCase);
+  }
+  .dark {
+    color: #fff;
+  }
+</style>
+<BaseLayout pageTitle={pageTitle}>
+  <div>
     <h2>... and my new Astro site!</h2>
 
     <p>
@@ -26,5 +42,30 @@
       This site will update as I complete more of the tutorial, so keep checking
       back and see how my journey is going!
     </p>
-  </body>
-</html>
+    <p>These are some facts about me:</p>
+    <ul>
+      <li>My name is {firstName}</li>
+      <li>I live in {country} and I work as a {occupation}</li>
+      {
+        hobbies.length >= 2 && (
+          <li>
+            Two of my hobbies are {hobbies[0]} and {hobbies[1]}
+          </li>
+        )
+      }
+    </ul>
+    <p>My skills are:</p>
+    <ul>
+      {skills.map((skill) => <li class="skill">{skill}</li>)}
+    </ul>
+    {happy && <p>I'm so happy to be learning Astro!</p>}
+    {finished && <p>🧑‍🚀I've finished the tutorial!</p>}
+    {
+      goal === 3 ? (
+        <p>My goal is to finish this in 3 days!</p>
+      ) : (
+        <p>I'll be taking my time 😊</p>
+      )
+    }
+  </div>
+</BaseLayout>
